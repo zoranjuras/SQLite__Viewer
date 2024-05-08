@@ -1,0 +1,18 @@
+<h2>Count the listeners</h2>
+<div class="step-text">
+<p></p>
+<p>How many window listeners are implemented in the code snippet below?</p>
+<pre><code class="language-java">public class CheckExitExample extends JFrame {
+    private class CheckOnExit extends WindowAdapter {
+        private final ConfirmWindow checker = new ConfirmWindow();
+
+        public void windowClosing(WindowEvent e) {
+            checker.setVisible(true);
+        }
+
+        public void windowClosed(WindowEvent e) {
+            checker.setVisible(false);
+        }
+    }
+}</code></pre>
+</div>

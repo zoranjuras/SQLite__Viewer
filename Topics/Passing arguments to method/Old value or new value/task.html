@@ -1,0 +1,18 @@
+<h2>Old value or new value?</h2>
+<div class="step-text">
+<p></p>
+<p>What is the value of <code class="language-java">java.getReleaseYear()</code> on line 7?</p>
+<pre><code class="language-java">public class PassArgumentsDemo {
+    public static void main(String[] args) {
+        ProgrammingLanguage java = new ProgrammingLanguage(1995);
+
+        referenceDemo(java);
+
+        System.out.println(java.getReleaseYear());
+    }
+
+    public static void referenceDemo(ProgrammingLanguage language) {
+        language = new ProgrammingLanguage(2015);
+    }
+}</code></pre>
+</div>

@@ -1,0 +1,114 @@
+<h2>Passing arguments to method</h2>
+<div class="step-text">
+<p>In this topic, we will talk about an important feature of programming languages that is a must for every programmer: you will learn how JVM passes arguments to a method. The topic will be based on practical examples, and we strongly recommend that you write and execute all the code yourself.</p>
+<h5 id="brief-overview">Brief overview</h5>
+<p>When working with Java, you should be aware of two mechanisms for passing an argument to a method. They are:</p>
+<ul>
+<li><strong>Pass-by-value.</strong> This<strong> </strong>approach is used when passing primitive data types. In this case, we pass a copy of the variable value and whatever happens to the copy does not affect the original <a class="theory-lookup not-relevant" href="/learn/step/0" rel="noopener noreferrer nofollow" target="_blank" title="In Java, a variable is a named storage location that is used to store a value of a specific type. | It is declared with a specific data type, which determines the kind of value that can be stored in it. Every variable has a unique name, also known as an identifier, which is used to access its value. Variables can be declared and initialized in a single statement, and their value can be accessed and modified using the name. It's important to note that variables can be changed, meaning you can assign a new value to a variable without having to declare it again.">variable</a> value. </li>
+<li><strong>Pass-by-reference</strong>. This one is a bit more complicated. In fact, Java does not implement this approach in its pure form. Instead of passing a reference to an object, we pass a copy of the reference. That is, we <strong>pass a reference by value</strong>. It is used for reference types. In this approach, a method gets access to the object and can change its state.</li>
+</ul>
+<p>Don't worry if the idea behind these approaches still seems a bit vague to you. We will explore both of them in the following sections. </p>
+<h5 id="passing-primitive-types">Passing primitive types</h5>
+<p>As we mentioned in the previous section, <a class="theory-lookup not-relevant" href="/learn/step/0" rel="noopener noreferrer nofollow" target="_blank" title="In Java, a primitive type is one of eight built-in data types provided by the language. | They are represented by keywords and are not objects, unlike reference types. Primitive types are divided into groups based on their meaning, and each group operates similarly but has different sizes and ranges of value. The most commonly used primitive type is `int`, which represents an integer number. Java also provides several types for integer and fractional numbers, which are often used in arithmetic expressions. Primitive types store their value directly, unlike reference types that store a reference to an object located elsewhere.">primitive types</a> in Java are passed by value. Now it is time to see how it works in practice:</p>
+<pre><code class="language-java">public class PassArgumentsDemo {
+    public static void main(String[] args) {
+        int javaReleaseYear = 1995;
+
+        // num = copy of javaReleaseYear value
+        increment(javaReleaseYear);
+
+        System.out.println(javaReleaseYear); // 1995
+    }
+
+    public static void increment(int num) {
+        num++;
+    }
+}</code></pre>
+<p>In this simple example, you can understand how the pass-by-value mechanism works. A copy of the <code class="language-java">javaReleaseYear</code> variable value was made and <a class="theory-lookup" href="/learn/step/3518" rel="noopener noreferrer nofollow" target="_blank" title="In Java, assignment is the action of assigning a value or the result of an expression to a variable. | This is done using the assignment operator, denoted by =. Initialization, on the other hand, refers to the process of assigning an initial value or the result of an expression to a variable at the time of its declaration. Proper initialization is important in Java as it ensures that objects are set up correctly before they are used in the program.">assigned</a> to the <code class="language-java">num</code> variable. Therefore, no matter how the <code class="language-java">num</code> value changes inside the <code class="language-java">increment(int num)</code> method, it will not affect the <code class="language-java">javaReleaseYear</code> value. </p>
+<h5 id="passing-reference-types">Passing reference types</h5>
+<p>To understand this approach, we have to dig deeper. First, let's understand what a reference is. When we create an object, it is stored in the heap and has its physical address in memory. In some languages, for example in C++, it is possible to store this address in a variable. Let's imagine such an object: <code class="language-java">Object obj = new Object()</code>. In this case, the <code class="language-java">obj</code> variable would store the physical address of the created object. In C++ such variables are called <strong>pointers</strong>.</p>
+<p>In Java, we do not store the physical address of an object in a variable — the reference does it for us. Variables are assigned with references that store object addresses. So, reference type variables store the reference instead of the value, which is copied and passed to the method. That's why when passing a reference type we have access to the object and can change its state: we have a copy of the reference storing the object's physical address.<br/>
+Let's move on to practice. First, we will create a class with a single field and the necessary class members.<br/>
+</p>
+<div class="alert alert-primary">Further in the theory section and in practical tasks, we will use the <code class="language-java">ProgrammingLanguage</code> class from the code below.</div>
+<p></p>
+<pre><code class="language-java">class ProgrammingLanguage {
+    private int releaseYear;
+
+    public ProgrammingLanguage(int releaseYear) {
+        this.releaseYear= releaseYear;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(int releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+}</code></pre>
+<p>We will set the <a class="theory-lookup not-relevant" href="/learn/step/0" rel="noopener noreferrer nofollow" target="_blank" title="In Java, initialization refers to the process of assigning an initial value to a variable or an object. | This can be done in several ways, such as through a constructor, an instance initialization block, or a static initialization block. The Java compiler also allows for automatic type inference during initialization, where the type is determined based on the assigned value. Initialization is an important concept in Java because it ensures that objects are properly set up before they are used in a program.">initial value</a> for the <code class="language-java">releaseYear</code> field and change it later:</p>
+<pre><code class="language-java">public class PassArgumentsDemo {
+    public static void main(String[] args) {
+        ProgrammingLanguage java = new ProgrammingLanguage(1995);
+        System.out.println(java.getReleaseYear()); // 1995
+
+        // language = copy of java reference to the object
+        updateReleaseYear(java, 2011);
+
+        System.out.println(java.getReleaseYear()); // 2011
+    }
+
+    public static void updateReleaseYear(ProgrammingLanguage language, int year) {
+        language.setReleaseYear(year);
+    }
+}</code></pre>
+<p>In this example, we can see the behavior described above: we passed a <code class="language-java">ProgrammingLanguage</code> type variable to the method, the <code class="language-java">language</code> variable received a copy of the <code class="language-java">java</code> variable object reference and was able to change the instance variable <code class="language-java">releaseYear</code> value.<br/>
+<br/>
+</p>
+<div class="alert alert-primary"><code class="language-java">String</code> and all wrapper classes are reference types but passing them as an argument will not change the original value since they are all immutable classes.</div>
+<p></p>
+<p>In such examples, it is important to take one detail into account. When we passed a <code class="language-java">ProgrammingLanguage</code> type object, we were able to change the value of its field. But what if we passed this field to the method separately?</p>
+<pre><code class="language-java">public class PassArgumentsDemo {
+    public static void main(String[] args) {
+        ProgrammingLanguage java = new ProgrammingLanguage(1995);
+        System.out.println(java.getReleaseYear()); // 1995
+
+        updateReleaseYear(java.getReleaseYear(), 2011);
+
+        System.out.println(java.getReleaseYear()); // 1995
+    }
+
+    public static void updateReleaseYear(int actualReleaseYear, int year) {
+        System.out.println(actualReleaseYear); // 1995
+
+        actualReleaseYear = year;
+
+        System.out.println(actualReleaseYear); // 2011
+    }
+}</code></pre>
+<p>Of course, <code class="language-java">releaseYear</code> is an instance variable, but we do not pass it through the object inside which it is located. Instead, we pass it directly as a primitive type variable, so it is passed using the <strong>pass-by-value</strong> mechanism like a primitive type.<br/>
+Keep in mind that you can not change or remove the physical address stored by the reference. Look at this code sample:</p>
+<pre><code class="language-java">public class PassArgumentsDemo {
+    public static void main(String[] args) {
+        ProgrammingLanguage java = new ProgrammingLanguage(1995);
+        System.out.println(java.getReleaseYear()); // 1995
+
+        referenceDemo(java, 2011);
+
+        System.out.println(java.getReleaseYear()); // 1995
+    }
+
+    public static void referenceDemo(ProgrammingLanguage language, int year) {
+        System.out.println(language.getReleaseYear()); // 1995
+
+        language = new ProgrammingLanguage(year);
+
+        System.out.println(language.getReleaseYear()); // 2011
+    }
+}</code></pre>
+<p>Inside the method main, we created an object whose physical address is stored in a reference (let's call it <code class="language-java">ref#1</code>), and assigned it to the <code class="language-java">java</code> variable. Inside the method <code class="language-java">referenceDemo</code>, we created a <a class="theory-lookup not-relevant" href="/learn/step/0" rel="noopener noreferrer nofollow" target="_blank" title="In Java, a new object is an instance of a particular class that is created during runtime using the `new` keyword. | When a new object is created, memory is allocated for it on the heap, and its constructor is called to initialize its state. The object can then be used and manipulated throughout the program. It's important to note that variables of reference types, such as objects, store a reference to the object's location in memory, rather than the object itself. Additionally, if a class has no explicit constructor, the Java compiler automatically provides a default no-argument constructor.">new object</a> whose physical address is stored by another reference accordingly named <code class="language-java">ref#2</code>. We did not change the address <code class="language-java">ref#1</code> stores: it is impossible. So, after creating the new object, inside that method, the <code class="language-java">language</code> variable has nothing in common with the <code class="language-java">java</code> variable.</p>
+<h5 id="conclusion">Conclusion</h5>
+<p>In this topic, we discussed a very important mechanism each developer should know. Note that in Java we only use <strong>pass-by-value</strong>, though we have a mechanism providing us with the <strong>pass-by-reference</strong> effect for reference types. Practice using the samples we provided, make some changes and run your code —  it will help you master the topic.<br/>
+If you are curious about pointers, we encourage you to do some research. We recommend you search for info on the difference between <strong>pointers</strong> and <strong>references</strong> in C++ and about the <strong>pass-by-pointer</strong> approach.</p>
+</div>

@@ -1,0 +1,20 @@
+<h2>Printed number</h2>
+<div class="step-text">
+<p></p>
+<p>What number is printed to the console when the window is activated?</p>
+<pre><code class="language-java">public class CheckExitExample extends JFrame {
+    private class CheckOnExit extends WindowAdapter {
+       public void windowDeactivated(WindowEvent e) {
+           System.out.println(7);
+       }
+ 
+       public void windowDeiconified(WindowEvent e) {
+           System.out.println(10);
+       }
+
+
+        public void windowActivated(WindowEvent e) {
+            System.out.println(5);
+        }
+    }</code></pre>
+</div>

@@ -1,0 +1,28 @@
+<h2>Setting Filters</h2>
+<div class="step-text">
+<p></p>
+<p>What code should be added below to filter the table for values which are equal to Bob</p>
+<pre><code class="language-java">public JTableExample() {
+    super("JTable Example");
+    setSize(500, 500);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    getContentPane().setBackground(Color.white);
+
+
+    TableModel tableModel = new MyTableModel();
+
+    JTable table = new JTable(tableModel);
+
+    table.getModel().addTableModelListener(this); //Adds the TableModelListener
+    JScrollPane sp = new JScrollPane(table);
+    this.add(sp);
+
+    tableModel.setValueAt("James", 0, 0);
+
+    final TableRowSorter&lt;TableModel&gt; sorter = new TableRowSorter&lt;TableModel&gt;(tableModel);
+    table.setRowSorter(sorter);
+    sorter.setRowFilter(__________________);
+
+}
+</code></pre>
+</div>
